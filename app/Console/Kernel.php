@@ -39,6 +39,9 @@ class Kernel extends ConsoleKernel
         Commands\ConvertNegativeSubscriptions::class,
         Commands\ConvertTransitionalSubscriptions::class,
         \App\Console\Commands\CheckLostSubscriptions::class,
+        Commands\MigrateData::class,
+        Commands\MigrateAvatars::class,
+        Commands\TestMigration::class,
     ];
 
     protected function schedule(Schedule $schedule)

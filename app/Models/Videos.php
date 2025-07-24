@@ -10,7 +10,7 @@ class Videos extends Model
 {
     use HasFactory,AsSource;
 
-    protected $table = 'videos';
+    protected $table = 'content_video';
 
     /**
      * The attributes that are mass assignable.

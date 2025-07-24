@@ -12,10 +12,7 @@ class MigrateData extends Command
      *
      * @var string
      */
-    protected $signature = 'data:migrate 
-                            {--type=all : Type of migration (all, users, blogs, videos, courses, clubs, participants, transactions)}
-                            {--dry-run : Run without making changes}
-                            {--force : Force migration without confirmation}';
+    protected $signature = 'data:migrate {--type=all : Type of migration} {--dry-run : Run without making changes} {--force : Force migration without confirmation}';
 
     /**
      * The console command description.
