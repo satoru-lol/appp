@@ -180,7 +180,11 @@ class HomeController extends Controller
         }
 
         $viewParts = ViewParts::all();
-        $specialists = Specialist::where('status', 1)->orderBy('views')->limit(10)->get();
+        $specialists = Specialist::with(['user', 'category'])
+            ->active()
+            ->orderBy('views', 'asc')
+            ->limit(10)
+            ->get();
 
         if ($viewParts->isNotEmpty()) {
             foreach ($viewParts as $viewPart) {
