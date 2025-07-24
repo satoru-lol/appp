@@ -5,18 +5,19 @@
                 <div class="menu_group w-100">
                     <ul>
                         @guest
-                        <li><a href="{{ route('login') }}" class="active">Войти в систему</a></li>
+                        <li><a href="{{ route('v2.refactored.auth.login') }}" class="active">Войти в систему</a></li>
                         @endguest
                     </ul>
                     <div class="group_menu d-flex gap-3 gap-sm-5">
                         <ul class="d-flex flex-column" style="white-space:nowrap;">
-                            <li><a href="/about">Об Ассоциации</a></li>
-                            <li><a href="{{ route('courses-v2.index') }}">Курсы</a></li>
-                            <li><a href="{{ route('v2.video.index') }}">Видеотека</a></li>
+                            <li><a href="{{ route('v2.refactored.home.about') }}">Об Ассоциации</a></li>
+                            <li><a href="{{ route('v2.refactored.courses.index') }}">Курсы</a></li>
+                            <li><a href="{{ route('v2.refactored.video.index') }}">Видеотека</a></li>
                         </ul>
                         <ul class="d-flex flex-column" style="white-space:nowrap;">
-                            <li><a href="{{ route('v2.meetings.index') }}">Наши встречи</a></li>
-                            <li><a href="{{ route('v2.club.index') }}">Онлайн-клубы</a></li>
+                            <li><a href="{{ route('v2.refactored.meetings.index') }}">Наши встречи</a></li>
+                            <li><a href="{{ route('v2.refactored.clubs.index') }}">Онлайн-клубы</a></li>
+                            <li><a href="{{ route('v2.refactored.home.contacts') }}">Контакты</a></li>
                         </ul>
                     </div>
                 </div>

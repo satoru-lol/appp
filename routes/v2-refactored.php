@@ -6,6 +6,7 @@ use App\Http\Controllers\V2\Refactored\MeetingsController;
 use App\Http\Controllers\V2\Refactored\CoursesController;
 use App\Http\Controllers\V2\Refactored\VideoController;
 use App\Http\Controllers\V2\Refactored\AuthController;
+use App\Http\Controllers\V2\Refactored\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,12 @@ use App\Http\Controllers\V2\Refactored\AuthController;
 | Рефакторенные маршруты для V2 функционала с улучшенной архитектурой
 |
 */
+
+// Home Routes (Refactored)
+Route::get('/', [HomeController::class, 'index'])->name('v2.refactored.home.index');
+Route::get('/search', [HomeController::class, 'search'])->name('v2.refactored.home.search');
+Route::get('/about', [HomeController::class, 'about'])->name('v2.refactored.home.about');
+Route::get('/contacts', [HomeController::class, 'contacts'])->name('v2.refactored.home.contacts');
 
 // Profile Routes (Refactored)
 Route::middleware('auth')->prefix('v2/refactored/profile')->name('v2.refactored.profile.')->group(function () {

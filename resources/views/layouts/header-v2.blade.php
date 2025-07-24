@@ -67,7 +67,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="{{ route('v2.refactored.home.index') }}">
                 <img src="/img/logo.svg" alt="Logo АЧПП">
             </a>
 
@@ -80,16 +80,16 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileUserDropdown">
                             <li><h6 class="dropdown-header">{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}</h6></li>
-                            <li><a class="dropdown-item" href="{{ route('v2.profile.index') }}"><i class="bi bi-person-circle"></i>Профиль</a></li>
-                            <li><a class="dropdown-item" href="{{ route('v2.profile.index', ['tab' => 'activity']) }}"><i class="bi bi-activity"></i>Моя активность</a></li>
+                            <li><a class="dropdown-item" href="{{ route('v2.refactored.profile.index') }}"><i class="bi bi-person-circle"></i>Профиль</a></li>
+                            <li><a class="dropdown-item" href="{{ route('v2.refactored.profile.index', ['tab' => 'clubs']) }}"><i class="bi bi-people"></i>Мои клубы</a></li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('v2.profile.index', ['tab' => 'balance']) }}">
+                                <a class="dropdown-item" href="{{ route('v2.refactored.profile.index', ['tab' => 'balance']) }}">
                                     <i class="bi bi-wallet2"></i>
                                     <span>Баланс</span>
                                     <span class="badge bg-light text-dark rounded-pill ms-auto">{{ auth()->user()->balance ?? 0 }} ₽</span>
                                 </a>
                             </li>
-                            <li><a class="dropdown-item" href="{{ route('v2.profile.index', ['tab' => 'password']) }}"><i class="bi bi-gear"></i>Настройки</a></li>
+                            <li><a class="dropdown-item" href="{{ route('v2.refactored.profile.index', ['tab' => 'subscription']) }}"><i class="bi bi-credit-card"></i>Подписка</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
@@ -112,20 +112,20 @@
                 <!-- Main Nav Links (centered for desktop) -->
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Об Ассоциации</a>
+                        <a class="nav-link {{ request()->routeIs('v2.refactored.home.about') ? 'active' : '' }}" href="{{ route('v2.refactored.home.about') }}">Об Ассоциации</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('courses-v2*') ? 'active' : '' }}" href="{{ route('courses-v2.index') }}">Курсы</a>
+                        <a class="nav-link {{ request()->is('v2/refactored/courses*') ? 'active' : '' }}" href="{{ route('v2.refactored.courses.index') }}">Курсы</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('v2/meetings*') ? 'active' : '' }}" href="{{ route('v2.meetings.index') }}">Наши встречи</a>
+                        <a class="nav-link {{ request()->is('v2/refactored/meetings*') ? 'active' : '' }}" href="{{ route('v2.refactored.meetings.index') }}">Наши встречи</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('v2/club*') ? 'active' : '' }}" href="{{ route('v2.club.index') }}">Онлайн-клубы</a>
+                        <a class="nav-link {{ request()->is('v2/refactored/clubs*') ? 'active' : '' }}" href="{{ route('v2.refactored.clubs.index') }}">Онлайн-клубы</a>
                     </li>
                     @auth
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('v2/video*') ? 'active' : '' }}" href="{{ route('v2.video.index') }}">Видеотека</a>
+                        <a class="nav-link {{ request()->is('v2/refactored/video*') ? 'active' : '' }}" href="{{ route('v2.refactored.video.index') }}">Видеотека</a>
                     </li>
                     @endauth
                 </ul>
@@ -140,16 +140,16 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="desktopUserDropdown">
                                <li><h6 class="dropdown-header">{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}</h6></li>
-                                <li><a class="dropdown-item" href="{{ route('v2.profile.index') }}"><i class="bi bi-person-circle"></i>Профиль</a></li>
-                                <li><a class="dropdown-item" href="{{ route('v2.profile.index', ['tab' => 'activity']) }}"><i class="bi bi-activity"></i>Моя активность</a></li>
+                                <li><a class="dropdown-item" href="{{ route('v2.refactored.profile.index') }}"><i class="bi bi-person-circle"></i>Профиль</a></li>
+                                <li><a class="dropdown-item" href="{{ route('v2.refactored.profile.index', ['tab' => 'clubs']) }}"><i class="bi bi-people"></i>Мои клубы</a></li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('v2.profile.index', ['tab' => 'balance']) }}">
+                                    <a class="dropdown-item" href="{{ route('v2.refactored.profile.index', ['tab' => 'balance']) }}">
                                         <i class="bi bi-wallet2"></i>
                                         <span>Баланс</span>
                                         <span class="badge bg-light text-dark rounded-pill ms-auto">{{ auth()->user()->balance ?? 0 }} ₽</span>
                                     </a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ route('v2.profile.index', ['tab' => 'password']) }}"><i class="bi bi-gear"></i>Настройки</a></li>
+                                <li><a class="dropdown-item" href="{{ route('v2.refactored.profile.index', ['tab' => 'subscription']) }}"><i class="bi bi-credit-card"></i>Подписка</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form-desktop').submit();">
@@ -163,7 +163,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a href="{{ route('login') }}" class="btn" style="background-color: #613482; color: #fff;">Войти</a>
+                            <a href="{{ route('v2.refactored.auth.login') }}" class="btn" style="background-color: #613482; color: #fff;">Войти</a>
                         </li>
                     @endauth
                 </ul>
@@ -171,7 +171,7 @@
                 <!-- Login button for mobile menu -->
                 <div class="d-lg-none mt-3">
                      @guest
-                        <a href="{{ route('login') }}" class="btn w-100" style="background-color: #613482; color: #fff;">Войти</a>
+                        <a href="{{ route('v2.refactored.auth.login') }}" class="btn w-100" style="background-color: #613482; color: #fff;">Войти</a>
                     @endguest
                 </div>
 
