@@ -1,0 +1,252 @@
+/* Стили для страницы списка курсов */
+.courses-v2-container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 32px 16px;
+}
+.courses-v2-header { 
+    margin-bottom: 32px; 
+}
+.courses-v2-header h1 { 
+    color: #613482; 
+    margin-bottom: 16px; 
+    font-size: 2rem; 
+}
+.courses-v2-categories { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+    margin-bottom: 24px; 
+}
+.courses-v2-category { 
+    padding: 8px 16px; 
+    border-radius: 20px; 
+    background: #f5f5f5; 
+    color: #444; 
+    text-decoration: none; 
+    transition: all 0.2s; 
+}
+.courses-v2-category:hover { 
+    background: #e0e0e0; 
+}
+.courses-v2-category.active { 
+    background: #613482; 
+    color: white; 
+}
+
+.courses-v2-list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 32px; 
+}
+.course-v2-card { 
+    background: #fff; 
+    border-radius: 18px; 
+    box-shadow: 0 2px 16px rgba(97,52,130,0.08); 
+    width: 340px; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    transition: box-shadow .2s; 
+    border: 2px solid #eee; 
+}
+.course-v2-card:hover { 
+    box-shadow: 0 4px 32px rgba(97,52,130,0.18); 
+    border-color: #b39ddb; 
+}
+.course-v2-image { 
+    background: linear-gradient(120deg, #ede7f6 60%, #fff 100%); 
+    height: 180px; 
+    background-size: cover; 
+    background-position: center; 
+}
+.course-v2-info { 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+}
+.course-v2-info h2 { 
+    font-size: 1.2rem; 
+    color: #613482; 
+    margin-bottom: 12px; 
+}
+.course-v2-info p { 
+    color: #444; 
+    margin-bottom: 8px; 
+    display: flex; 
+    align-items: center; 
+}
+.course-v2-info p svg { 
+    margin-right: 8px; 
+}
+.course-v2-actions { 
+    margin-top: auto; 
+    padding-top: 16px; 
+}
+.course-v2-btn { 
+    display: inline-block; 
+    background: #613482; 
+    color: #fff; 
+    border-radius: 8px; 
+    padding: 8px 18px; 
+    text-decoration: none; 
+    transition: background .2s; 
+}
+.course-v2-btn:hover { 
+    background: #7e57c2; 
+}
+
+.courses-v2-empty { 
+    width: 100%; 
+    text-align: center; 
+    padding: 40px 0; 
+}
+.courses-v2-empty p { 
+    margin-bottom: 16px; 
+    color: #666; 
+}
+
+/* Стили для страницы отдельного курса */
+.course-v2-page-container { 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 40px 16px; 
+}
+.course-v2-breadcrumbs { 
+    margin-bottom: 24px; 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 8px; 
+    color: #666; 
+}
+.course-v2-breadcrumbs a { 
+    color: #613482; 
+    text-decoration: none; 
+}
+.course-v2-breadcrumbs a:hover { 
+    text-decoration: underline; 
+}
+
+.course-v2-page { 
+    display: flex; 
+    gap: 40px; 
+    background: #fff; 
+    border-radius: 18px; 
+    box-shadow: 0 2px 16px rgba(97,52,130,0.08); 
+    overflow: hidden; 
+}
+.course-v2-page-image { 
+    min-width: 340px; 
+    max-width: 340px; 
+    background: linear-gradient(120deg, #ede7f6 60%, #fff 100%); 
+    height: auto; 
+}
+.course-v2-page-image img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+.course-v2-page-info { 
+    padding: 32px 24px; 
+    flex: 1; 
+}
+.course-v2-page-info h1 { 
+    color: #613482; 
+    font-size: 2rem; 
+    margin-bottom: 18px; 
+}
+.course-v2-page-info h2 { 
+    color: #613482; 
+    font-size: 1.4rem; 
+    margin: 24px 0 12px; 
+}
+
+.course-v2-page-meta { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 16px; 
+    margin-bottom: 24px; 
+}
+.course-v2-meta-item { 
+    display: flex; 
+    align-items: center; 
+    color: #444; 
+}
+.course-v2-meta-item svg { 
+    margin-right: 8px; 
+}
+
+.course-v2-page-description { 
+    margin-bottom: 24px; 
+}
+.course-v2-page-text { 
+    color: #444; 
+    line-height: 1.6; 
+}
+
+.course-v2-page-product { 
+    margin-bottom: 24px; 
+    padding: 16px; 
+    background: #f5f0ff; 
+    border-radius: 12px; 
+}
+.course-v2-product-info { 
+    color: #444; 
+}
+.course-v2-product-info p { 
+    margin-bottom: 8px; 
+}
+
+.course-v2-page-actions { 
+    display: flex; 
+    gap: 16px; 
+    margin-top: 32px; 
+}
+.course-v2-btn { 
+    display: inline-block; 
+    background: #613482; 
+    color: #fff; 
+    border-radius: 8px; 
+    padding: 10px 24px; 
+    text-decoration: none; 
+    transition: background .2s; 
+}
+.course-v2-btn:hover { 
+    background: #7e57c2; 
+}
+.course-v2-btn-secondary { 
+    display: inline-block; 
+    background: transparent; 
+    color: #613482; 
+    border: 1px solid #613482; 
+    border-radius: 8px; 
+    padding: 10px 24px; 
+    text-decoration: none; 
+    transition: all .2s; 
+}
+.course-v2-btn-secondary:hover { 
+    background: #f5f0ff; 
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .courses-v2-list { 
+        justify-content: center; 
+    }
+    .course-v2-card { 
+        width: 100%; 
+        max-width: 340px; 
+    }
+    .course-v2-page { 
+        flex-direction: column; 
+    }
+    .course-v2-page-image { 
+        min-width: 100%; 
+        max-width: 100%; 
+        height: 240px; 
+    }
+    .course-v2-page-actions { 
+        flex-direction: column; 
+    }
+} 

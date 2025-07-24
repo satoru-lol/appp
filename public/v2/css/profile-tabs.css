@@ -1,0 +1,22 @@
+.profile-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.profile-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #6c757d;
+    font-weight: 600;
+}
+
+.profile-tabs .nav-link.active,
+.profile-tabs .nav-item.show .nav-link {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.tab-content {
+    padding-top: 20px;
+} 

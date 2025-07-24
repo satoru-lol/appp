@@ -1,0 +1,8 @@
+{
+    "Администартор": "Administrator",
+    "Пользователь": "User",
+    "Заблокированный": "Locked",
+    "group.admin": "Administrator",
+    "group.user": "User",
+    "group.block": "Locked"
+}
