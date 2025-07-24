@@ -35,6 +35,7 @@ class V2ServiceProvider extends ServiceProvider
         // Регистрируем общие сервисы
         $this->app->singleton(AvatarService::class);
         $this->app->singleton(\App\Services\DataMigrationService::class);
+        $this->app->singleton(\App\Services\DatabaseStructureService::class);
         
         // Регистрируем сервисы
         $this->app->singleton(AuthService::class, function ($app) {
