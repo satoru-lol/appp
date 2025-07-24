@@ -7,6 +7,7 @@ use App\Http\Controllers\V2\Refactored\CoursesController;
 use App\Http\Controllers\V2\Refactored\VideoController;
 use App\Http\Controllers\V2\Refactored\AuthController;
 use App\Http\Controllers\V2\Refactored\HomeController as RefactoredHomeController;
+use App\Http\Controllers\V2\Refactored\ClubsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,28 @@ Route::prefix('v2/refactored/meetings')->name('v2.refactored.meetings.')->group(
         Route::post('/{id}/comment', [MeetingsController::class, 'addComment'])->name('addComment');
         Route::post('/{id}/like', [MeetingsController::class, 'addLike'])->name('addLike');
         Route::post('/{id}/dislike', [MeetingsController::class, 'addDislike'])->name('addDislike');
+    });
+});
+
+// Clubs Routes (Refactored)
+Route::prefix('v2/refactored/clubs')->name('v2.refactored.clubs.')->group(function () {
+    // Публичные маршруты
+    Route::get('/', [ClubsController::class, 'index'])->name('index');
+    Route::get('/search', [ClubsController::class, 'search'])->name('search');
+    Route::get('/category/{id}', [ClubsController::class, 'category'])->name('category');
+    Route::get('/{id}', [ClubsController::class, 'show'])->name('show');
+    
+    // Маршруты требующие авторизации
+    Route::middleware('auth')->group(function () {
+        Route::get('/my', [ClubsController::class, 'myClubs'])->name('my');
+        Route::post('/{id}/join', [ClubsController::class, 'join'])->name('join');
+        Route::post('/{id}/leave', [ClubsController::class, 'leave'])->name('leave');
+        
+        // API маршруты
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('/', [ClubsController::class, 'apiIndex'])->name('index');
+            Route::post('/{id}/join', [ClubsController::class, 'apiJoin'])->name('join');
+        });
     });
 });
 
