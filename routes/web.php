@@ -38,6 +38,9 @@ require __DIR__.'/v2.php';
 // Подключаем маршруты для курсов v2
 require __DIR__.'/web-courses-v2.php';
 
+// Подключаем рефакторенные V2 маршруты
+require __DIR__.'/v2-refactored.php';
+
 Route::get('/clear-cache', function() {
     Artisan::call('optimize:clear');
     return "Cache is cleared";

@@ -100,6 +100,38 @@ class User extends Authenticatable
         return $this->hasOne(Subscription::class, 'user_id');
     }
 
+    /**
+     * Get the user's introduction.
+     */
+    public function introduction()
+    {
+        return $this->hasOne(\App\Models\Introduction::class, 'email', 'email');
+    }
+
+    /**
+     * Get the user's transactions.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(\App\Models\Transactions::class, 'user_id');
+    }
+
+    /**
+     * Get the user's subscription payments.
+     */
+    public function subscriptionPays()
+    {
+        return $this->hasMany(\App\Models\SubscriptionPays::class, 'user_id');
+    }
+
+    /**
+     * Get the user's participant actions.
+     */
+    public function participantActions()
+    {
+        return $this->hasMany(\App\Models\ParticipantActions::class, 'user_id');
+    }
+
     public function userPhoneVerified()
     {
         return !is_null($this->phone_verified_at);
