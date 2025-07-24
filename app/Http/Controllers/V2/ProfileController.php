@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Используйте App\Http\Controllers\V2\Refactored\ProfileController
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Новая архитектура находится в app/Http/Controllers/V2/Refactored/ProfileController.php
+ * 
+ * Миграция:
+ * - Старые маршруты: /v2/profile/*
+ * - Новые маршруты: /v2/refactored/profile/*
+ * 
+ * @see App\Http\Controllers\V2\Refactored\ProfileController
+ */
+
 namespace App\Http\Controllers\V2;
 
 use App\Http\Controllers\Controller;

@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Используйте App\Http\Controllers\V2\Refactored\CoursesController
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Новая архитектура находится в app/Http/Controllers/V2/Refactored/CoursesController.php
+ * 
+ * Миграция:
+ * - Старые маршруты: /courses-v2/*
+ * - Новые маршруты: /v2/refactored/courses/*
+ * 
+ * @see App\Http\Controllers\V2\Refactored\CoursesController
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Course;

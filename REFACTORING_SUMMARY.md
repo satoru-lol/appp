@@ -6,20 +6,31 @@
 - **UserRepository** - работа с пользователями и их данными
 - **MeetingRepository** - работа со встречами и связанными данными
 - **ClubRepository** - работа с клубами и их датами
+- **CourseRepository** - работа с курсами и записями
+- **VideoRepository** - работа с видеотекой и категориями
+- **AuthRepository** - работа с авторизацией и регистрацией
 
 ### 2. Реализован Service Layer
 - **ProfileService** - бизнес-логика профиля пользователя
 - **MeetingService** - бизнес-логика встреч
 - **ClubService** - бизнес-логика клубов
+- **CourseService** - бизнес-логика курсов и записи
+- **VideoService** - бизнес-логика видеотеки с проверкой подписки
+- **AuthService** - бизнес-логика авторизации и регистрации
 
 ### 3. Добавлены Form Requests
 - **UpdateProfileRequest** - валидация данных профиля
 - **UpdateAvatarRequest** - валидация загрузки аватара
 - **StoreMeetingRequest** - валидация создания встреч
+- **LoginRequest** - валидация входа в систему
+- **RegisterRequest** - валидация регистрации
 
 ### 4. Созданы рефакторенные контроллеры
 - **ProfileController** (Refactored) - тонкий слой с DI
 - **MeetingsController** (Refactored) - чистая HTTP логика
+- **CoursesController** (Refactored) - оптимизированная работа с курсами
+- **VideoController** (Refactored) - будет создан
+- **AuthController** (Refactored) - будет создан
 
 ### 5. Оптимизированы запросы к БД
 - Устранены N+1 проблемы через eager loading

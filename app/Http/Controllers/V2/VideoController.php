@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Используйте App\Http\Controllers\V2\Refactored\VideoController
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Новая архитектура находится в app/Http/Controllers/V2/Refactored/VideoController.php
+ * 
+ * Миграция:
+ * - Старые маршруты: /v2/video/*
+ * - Новые маршруты: /v2/refactored/video/*
+ * 
+ * @see App\Http\Controllers\V2\Refactored\VideoController
+ */
+
 namespace App\Http\Controllers\V2;
 
 use App\Http\Controllers\Controller;

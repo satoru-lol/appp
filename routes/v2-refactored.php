@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\V2\Refactored\ProfileController;
 use App\Http\Controllers\V2\Refactored\MeetingsController;
+use App\Http\Controllers\V2\Refactored\CoursesController;
+use App\Http\Controllers\V2\Refactored\VideoController;
+use App\Http\Controllers\V2\Refactored\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +54,70 @@ Route::prefix('v2/refactored/meetings')->name('v2.refactored.meetings.')->group(
         Route::post('/{id}/comment', [MeetingsController::class, 'addComment'])->name('addComment');
         Route::post('/{id}/like', [MeetingsController::class, 'addLike'])->name('addLike');
         Route::post('/{id}/dislike', [MeetingsController::class, 'addDislike'])->name('addDislike');
+    });
+});
+
+// Courses Routes (Refactored)
+Route::prefix('v2/refactored/courses')->name('v2.refactored.courses.')->group(function () {
+    // Публичные маршруты
+    Route::get('/', [CoursesController::class, 'index'])->name('index');
+    Route::get('/category/{id}', [CoursesController::class, 'category'])->name('category');
+    Route::get('/{id}', [CoursesController::class, 'show'])->name('show');
+    Route::get('/search', [CoursesController::class, 'search'])->name('search');
+    
+    // Маршруты требующие авторизации
+    Route::middleware('auth')->group(function () {
+        Route::get('/{id}/subscribe', [CoursesController::class, 'subscribe'])->name('subscribe');
+        
+        // Админские маршруты
+        Route::middleware('admin')->group(function () {
+            Route::get('/create', [CoursesController::class, 'create'])->name('create');
+            Route::post('/', [CoursesController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [CoursesController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [CoursesController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CoursesController::class, 'destroy'])->name('destroy');
+        });
+        
+        // API маршруты
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('/', [CoursesController::class, 'apiIndex'])->name('index');
+            Route::post('/{id}/subscribe', [CoursesController::class, 'apiSubscribe'])->name('subscribe');
+        });
+    });
+});
+
+// Video Routes (Refactored) - будет создан позже
+Route::prefix('v2/refactored/video')->name('v2.refactored.video.')->group(function () {
+    Route::middleware('auth')->group(function () {
+        Route::get('/', [VideoController::class, 'index'])->name('index');
+        Route::get('/category/{id}', [VideoController::class, 'showCategory'])->name('category');
+        Route::get('/{id}', [VideoController::class, 'showVideo'])->name('show');
+        Route::get('/search', [VideoController::class, 'search'])->name('search');
+        
+        // API маршруты
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('/categories/{id}/videos', [VideoController::class, 'getCategoryVideos'])->name('category.videos');
+            Route::get('/search/videos', [VideoController::class, 'searchVideos'])->name('search.videos');
+        });
+    });
+});
+
+// Auth Routes (Refactored) - будет создан позже
+Route::prefix('v2/refactored/auth')->name('v2.refactored.auth.')->group(function () {
+    // Публичные маршруты
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+    Route::get('/password/reset', [AuthController::class, 'showResetForm'])->name('password.request');
+    Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('password.email');
+    Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
+    
+    // Авторизованные маршруты
+    Route::middleware('auth')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::post('/password/change', [AuthController::class, 'changePassword'])->name('password.change');
+        Route::post('/phone/verify', [AuthController::class, 'verifyPhone'])->name('phone.verify');
+        Route::post('/phone/send-code', [AuthController::class, 'sendVerificationCode'])->name('phone.send-code');
     });
 });
