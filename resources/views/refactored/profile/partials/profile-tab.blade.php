@@ -6,8 +6,8 @@
         <!-- Аватар -->
         <div class="avatar-section">
             <div class="avatar-wrapper">
-                <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('img/default-avatar.png') }}" 
-                     alt="Аватар" class="avatar-img" id="avatarImg">
+                                            <img src="{{ $user->avatar_url }}" 
+                                 alt="Аватар" class="avatar-img" id="avatarImg">
                 <button type="button" class="avatar-upload-btn" data-bs-toggle="modal" data-bs-target="#avatarModal">
                     <i class="bi bi-camera"></i>
                 </button>

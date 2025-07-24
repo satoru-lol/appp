@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductPermission;
 use App\Repositories\V2\UserRepository;
 use App\Services\SubscriptionService;
+use App\Services\AvatarService;
 use App\Services\V2\ClubService;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -17,7 +18,8 @@ class ProfileService
     public function __construct(
         private UserRepository $userRepository,
         private SubscriptionService $subscriptionService,
-        private ClubService $clubService
+        private ClubService $clubService,
+        private AvatarService $avatarService
     ) {}
 
     public function getUserDashboardData(int $userId, string $activeTab = 'profile'): array
@@ -84,41 +86,23 @@ class ProfileService
     {
         $user = User::findOrFail($userId);
         
-        try {
-            $filename = $this->userRepository->saveAvatar($user, $file);
-            $avatarUrl = route('v2.avatar', ['userId' => $user->id]) . '?t=' . time();
-            
-            return [
-                'success' => true,
-                'message' => 'Аватар успешно обновлен.',
-                'avatar_url' => $avatarUrl
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Ошибка при загрузке аватара: ' . $e->getMessage()
-            ];
-        }
+        return $this->avatarService->uploadAvatar($user, $file);
     }
 
     public function removeAvatar(int $userId): array
     {
         $user = User::findOrFail($userId);
-        $deleted = $this->userRepository->removeAvatar($user);
         
-        return [
-            'success' => $deleted,
-            'message' => $deleted ? 'Аватар удален.' : 'Аватар не найден.'
-        ];
+        return $this->avatarService->deleteAvatar($user);
     }
 
     public function getAvatarResponse(int $userId): \Symfony\Component\HttpFoundation\Response
     {
         $user = User::findOrFail($userId);
-        $avatarPath = $this->userRepository->getAvatarPath($user);
         
-        if ($avatarPath && file_exists(public_path('img/avatars/' . $avatarPath))) {
-            $fullPath = public_path('img/avatars/' . $avatarPath);
+        // Если есть аватар в новой системе
+        if ($user->avatar && \Storage::exists('public/' . $user->avatar)) {
+            $fullPath = storage_path('app/public/' . $user->avatar);
             return response()->file($fullPath, [
                 'Cache-Control' => 'public, max-age=3600',
                 'Expires' => gmdate('D, d M Y H:i:s \G\M\T', time() + 3600)
@@ -131,8 +115,9 @@ class ProfileService
             return response()->file($defaultAvatar);
         }
         
-        // Если нет дефолтного аватара, создаем простое изображение
-        return $this->generateDefaultAvatar($user);
+        // Генерируем аватар через redirect на внешний сервис
+        $avatarUrl = $this->avatarService->generateAvatarUrl($user);
+        return redirect($avatarUrl);
     }
 
     private function createTrialSubscription(User $user): \App\Models\Subscription

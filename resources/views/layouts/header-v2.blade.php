@@ -76,7 +76,7 @@
                 @auth
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="mobileUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                             <img src="/avatar/{{ auth()->user()->id }}" alt="Аватар" class="rounded-circle profile-avatar">
+                             <img src="{{ auth()->user()->avatar_url }}" alt="Аватар" class="rounded-circle profile-avatar">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileUserDropdown">
                             <li><h6 class="dropdown-header">{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}</h6></li>
@@ -135,7 +135,7 @@
                     @auth
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="desktopUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="/avatar/{{ auth()->user()->id }}" alt="Аватар" class="rounded-circle me-2 profile-avatar">
+                                <img src="{{ auth()->user()->avatar_url }}" alt="Аватар" class="rounded-circle me-2 profile-avatar">
                                 {{ auth()->user()->firstname }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="desktopUserDropdown">

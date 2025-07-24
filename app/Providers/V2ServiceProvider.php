@@ -9,6 +9,7 @@ use App\Services\V2\ClubService;
 use App\Services\V2\CourseService;
 use App\Services\V2\VideoService;
 use App\Services\V2\AuthService;
+use App\Services\AvatarService;
 use App\Repositories\V2\UserRepository;
 use App\Repositories\V2\MeetingRepository;
 use App\Repositories\V2\ClubRepository;
@@ -30,6 +31,9 @@ class V2ServiceProvider extends ServiceProvider
         $this->app->singleton(CourseRepository::class);
         $this->app->singleton(VideoRepository::class);
         $this->app->singleton(AuthRepository::class);
+        
+        // Регистрируем общие сервисы
+        $this->app->singleton(AvatarService::class);
         
         // Регистрируем сервисы
         $this->app->singleton(AuthService::class, function ($app) {
@@ -61,7 +65,8 @@ class V2ServiceProvider extends ServiceProvider
             return new ProfileService(
                 $app->make(UserRepository::class),
                 $app->make(\App\Services\SubscriptionService::class),
-                $app->make(ClubService::class)
+                $app->make(ClubService::class),
+                $app->make(AvatarService::class)
             );
         });
         

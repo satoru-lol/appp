@@ -279,8 +279,8 @@
             @foreach($specialists as $specialist)
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="specialist-card">
-                        <img src="{{ $specialist->user->avatar ? asset('storage/' . $specialist->user->avatar) : asset('img/default-avatar.png') }}" 
-                             alt="{{ $specialist->user->firstname }}" class="specialist-avatar">
+                        <img src="{{ $specialist->user ? $specialist->user->avatar_url : asset('img/default-avatar.png') }}" 
+                             alt="{{ $specialist->user ? $specialist->user->full_name : 'Специалист' }}" class="specialist-avatar">
                         <h5 class="specialist-name">
                             {{ $specialist->user->firstname }} {{ $specialist->user->lastname }}
                         </h5>

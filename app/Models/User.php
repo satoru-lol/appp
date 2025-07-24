@@ -37,9 +37,12 @@ class User extends Authenticatable
         'action',
         'phone',
         'email_verified_at',
-	    'auto',
-	    'psy_lance',
-	    'used_sub'
+        'auto',
+        'psy_lance',
+        'used_sub',
+        'avatar',
+        'avatar_original_name',
+        'bio'
     ];
 
     /**
@@ -191,5 +194,61 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    /**
+     * Получить URL аватара пользователя
+     */
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar && file_exists(public_path('storage/' . $this->avatar))) {
+            return asset('storage/' . $this->avatar);
+        }
+
+        // Fallback на default аватар
+        return asset('img/default-avatar.png');
+    }
+
+    /**
+     * Получить полное имя пользователя
+     */
+    public function getFullNameAttribute(): string
+    {
+        return trim($this->firstname . ' ' . $this->lastname);
+    }
+
+    /**
+     * Получить инициалы для аватара по умолчанию
+     */
+    public function getInitialsAttribute(): string
+    {
+        $firstname = $this->firstname ? mb_substr($this->firstname, 0, 1) : '';
+        $lastname = $this->lastname ? mb_substr($this->lastname, 0, 1) : '';
+        
+        return mb_strtoupper($firstname . $lastname) ?: 'У';
+    }
+
+    /**
+     * Получить цвет для аватара по умолчанию (на основе ID)
+     */
+    public function getAvatarColorAttribute(): string
+    {
+        $colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+            '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+        ];
+        
+        return $colors[$this->id % count($colors)];
+    }
+
+    /**
+     * Получить URL для генерируемого аватара
+     */
+    public function getGeneratedAvatarAttribute(): string
+    {
+        $initials = $this->initials;
+        $color = str_replace('#', '', $this->avatar_color);
+        
+        return "https://ui-avatars.com/api/?name={$initials}&background={$color}&color=fff&size=200&font-size=0.6";
     }
 }

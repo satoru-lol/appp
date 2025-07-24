@@ -94,8 +94,8 @@
                     <div class="card-body">
                         @foreach($participants->take(10) as $participant)
                             <div class="d-flex align-items-center mb-2">
-                                <img src="{{ $participant->avatar ? asset('storage/' . $participant->avatar) : asset('img/default-avatar.png') }}" 
-                                     alt="{{ $participant->firstname }}" 
+                                <img src="{{ $participant->avatar_url }}" 
+                                     alt="{{ $participant->full_name }}" 
                                      class="rounded-circle me-2" 
                                      style="width: 32px; height: 32px; object-fit: cover;">
                                 <span class="small">{{ $participant->firstname }} {{ $participant->lastname }}</span>
