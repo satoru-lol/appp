@@ -25,7 +25,7 @@ class ProfileController extends Controller
         
         $data = $this->profileService->getUserDashboardData($userId, $activeTab);
         
-        return view('v2.user.profile', $data);
+        return view('refactored.profile.index', $data);
     }
 
     public function update(UpdateProfileRequest $request): RedirectResponse
@@ -37,7 +37,7 @@ class ProfileController extends Controller
         
         if ($success) {
             return redirect()
-                ->route('v2.profile.index')
+                ->route('v2.refactored.profile.index')
                 ->with('success', 'Профиль успешно обновлен.');
         }
         
@@ -119,12 +119,12 @@ class ProfileController extends Controller
             // Пока возвращаем успешный результат
             
             return redirect()
-                ->route('v2.profile.index')
+                ->route('v2.refactored.profile.index')
                 ->with('pay_success', 'Подписка успешно оформлена!');
                 
         } catch (\Exception $e) {
             return redirect()
-                ->route('v2.profile.index', ['tab' => 'subscription'])
+                ->route('v2.refactored.profile.index', ['tab' => 'subscription'])
                 ->with('pay_error', 'Произошла ошибка при оформлении подписки: ' . $e->getMessage());
         }
     }
@@ -143,12 +143,12 @@ class ProfileController extends Controller
             // Пока возвращаем успешный результат
             
             return redirect()
-                ->route('v2.profile.index', ['tab' => 'balance'])
+                ->route('v2.refactored.profile.index', ['tab' => 'balance'])
                 ->with('pay_success', 'Ваш платеж обрабатывается. Баланс будет пополнен в течение нескольких минут.');
                 
         } catch (\Exception $e) {
             return redirect()
-                ->route('v2.profile.index', ['tab' => 'balance'])
+                ->route('v2.refactored.profile.index', ['tab' => 'balance'])
                 ->with('pay_error', 'Произошла ошибка во время оплаты. Пожалуйста, попробуйте снова или обратитесь в поддержку.');
         }
     }
@@ -207,6 +207,59 @@ class ProfileController extends Controller
                 'success' => false,
                 'message' => 'Ошибка при создании QR кода'
             ], 500);
+        }
+    }
+
+    /**
+     * Получение транзакций для AJAX
+     */
+    public function fetchTransactions(Request $request): JsonResponse
+    {
+        try {
+            $search = $request->get('search', '');
+            $type = $request->get('type', '');
+            $status = $request->get('status', '');
+            
+            $transactions = $this->profileService->getUserTransactions(
+                auth()->id(), 
+                $search, 
+                $type, 
+                $status
+            );
+            
+            $html = view('refactored.profile.partials.transactions-table', compact('transactions'))->render();
+            
+            return response()->json([
+                'success' => true,
+                'html' => $html
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ошибка загрузки транзакций'
+            ], 500);
+        }
+    }
+
+    /**
+     * Использование бонусных баллов
+     */
+    public function useBonus(Request $request): RedirectResponse
+    {
+        try {
+            $request->validate([
+                'bonus_amount' => 'required|integer|min:100|max:' . (auth()->user()->bonus_points ?? 0)
+            ]);
+
+            $result = $this->profileService->useBonusPoints(auth()->id(), $request->bonus_amount);
+            
+            return redirect()->route('v2.refactored.profile.index', ['tab' => 'balance'])
+                ->with('success', 'Бонусные баллы успешно зачислены на баланс');
+                
+        } catch (\Exception $e) {
+            return redirect()->route('v2.refactored.profile.index', ['tab' => 'balance'])
+                ->with('error', 'Ошибка при использовании бонусов: ' . $e->getMessage());
         }
     }
 }

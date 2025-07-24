@@ -20,18 +20,16 @@ use App\Http\Controllers\V2\Refactored\AuthController;
 Route::middleware('auth')->prefix('v2/refactored/profile')->name('v2.refactored.profile.')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('index');
     Route::put('/update', [ProfileController::class, 'update'])->name('update');
-    Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar.update');
-    Route::delete('/avatar', [ProfileController::class, 'removeAvatar'])->name('avatar.remove');
+    Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar');
     Route::get('/transactions', [ProfileController::class, 'fetchTransactions'])->name('transactions');
-    Route::post('/generate-qr-link', [ProfileController::class, 'generateQrLink'])->name('generate-qr-link');
-    Route::post('/subscription', [ProfileController::class, 'handleSubscription'])->name('subscription.handle');
-    Route::post('/balance/add', [ProfileController::class, 'addBalance'])->name('balance.add');
-    Route::post('/subscription/cancel', [ProfileController::class, 'cancelMonthPay'])->name('subscription.cancel');
-    Route::post('/qr-link', [ProfileController::class, 'createQrLink'])->name('qr-link.create');
-    
-    // Payment callback routes
+    Route::post('/subscribe', [ProfileController::class, 'subscribe'])->name('subscribe');
+    Route::post('/add-balance', [ProfileController::class, 'addBalance'])->name('add-balance');
+    Route::post('/cancel-subscription', [ProfileController::class, 'cancelMonthPay'])->name('cancel-subscription');
+    Route::post('/renew', [ProfileController::class, 'subscribe'])->name('renew');
+    Route::post('/use-bonus', [ProfileController::class, 'useBonus'])->name('use-bonus');
     Route::get('/payment/success', [ProfileController::class, 'paymentSuccess'])->name('payment.success');
     Route::get('/payment/fail', [ProfileController::class, 'paymentFail'])->name('payment.fail');
+    Route::post('/qr-link', [ProfileController::class, 'createQrLink'])->name('qr-link');
 });
 
 // Avatar Route (Refactored)

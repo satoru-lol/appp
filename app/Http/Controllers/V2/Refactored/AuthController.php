@@ -28,7 +28,7 @@ class AuthController extends Controller
         $title = 'Вход в систему - АЧПП';
         $description = 'Войдите в свой аккаунт Ассоциации частнопрактикующих психологов и психотерапевтов';
         
-        return view('auth-v2.login', compact('title', 'description'));
+        return view('refactored.auth.login', compact('title', 'description'));
     }
 
     // Обработка входа
@@ -76,7 +76,7 @@ class AuthController extends Controller
         $title = 'Регистрация - АЧПП';
         $description = 'Зарегистрируйтесь в Ассоциации частнопрактикующих психологов и психотерапевтов';
         
-        return view('auth-v2.register', compact('title', 'description'));
+        return view('refactored.auth.register', compact('title', 'description'));
     }
 
     // Обработка регистрации
@@ -148,7 +148,7 @@ class AuthController extends Controller
         $title = 'Восстановление пароля - АЧПП';
         $description = 'Восстановите доступ к своему аккаунту в АЧПП';
         
-        return view('auth-v2.passwords.email', compact('title', 'description'));
+        return view('refactored.auth.password-reset', compact('title', 'description'));
     }
 
     // Отправка ссылки для сброса пароля
