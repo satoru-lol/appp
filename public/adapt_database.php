@@ -3,7 +3,20 @@
 // Веб-интерфейс для адаптации существующего дампа БД к новой архитектуре
 // Доступ через браузер: /adapt_database.php
 
-require_once __DIR__ . '/../bootstrap/app.php';
+// Проверяем автозагрузку Composer
+if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    die('❌ Composer autoload не найден. Выполните: composer install');
+}
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Загружаем Laravel
+try {
+    $app = require_once __DIR__ . '/../bootstrap/app.php';
+    $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+} catch (Exception $e) {
+    die('❌ Ошибка загрузки Laravel: ' . $e->getMessage());
+}
 
 use App\Services\DatabaseStructureService;
 use App\Services\DataMigrationService;

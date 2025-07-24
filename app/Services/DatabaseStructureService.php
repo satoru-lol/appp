@@ -265,9 +265,19 @@ class DatabaseStructureService
         
         Schema::create('club', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('title')->nullable();
+            $table->text('text')->nullable();
             $table->string('image')->nullable();
+            $table->string('times')->nullable();
+            $table->datetime('date')->nullable();
+            $table->string('speakers')->nullable();
+            $table->string('theory')->nullable();
+            $table->string('feedback')->nullable();
+            $table->string('pay_method')->nullable();
+            $table->string('video')->nullable();
+            $table->integer('product_level')->nullable();
+            $table->boolean('is_hidden')->nullable();
+            $table->string('practice')->nullable();
             $table->timestamps();
         });
         
@@ -468,7 +478,7 @@ class DatabaseStructureService
         
         Schema::table('blogs', function (Blueprint $table) use (&$added) {
             if (!Schema::hasColumn('blogs', 'slug')) {
-                $table->string('slug')->nullable()->unique()->after('name');
+                $table->string('slug')->nullable()->unique()->after('quantity');
                 $added[] = 'slug';
             }
             if (!Schema::hasColumn('blogs', 'short_description')) {
@@ -642,7 +652,7 @@ class DatabaseStructureService
         
         Schema::table('club', function (Blueprint $table) use (&$added) {
             if (!Schema::hasColumn('club', 'slug')) {
-                $table->string('slug')->nullable()->unique()->after('name');
+                $table->string('slug')->nullable()->unique()->after('title');
                 $added[] = 'slug';
             }
             if (!Schema::hasColumn('club', 'short_description')) {
