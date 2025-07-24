@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Функционал админки будет перенесен в новую архитектуру
+ * 
+ * ВНИМАНИЕ: Данный файл будет переработан в будущих версиях.
+ * Планируется создание отдельного AdminController в рефакторенной архитектуре.
+ * 
+ * Миграция:
+ * - Старые маршруты: /v2/admin/*
+ * - Новые маршруты: /v2/refactored/admin/* (в планах)
+ * 
+ * @todo Создать App\Http\Controllers\V2\Refactored\AdminController
+ */
+
 namespace App\Http\Controllers\V2;
 
 use App\Http\Controllers\Controller;

@@ -86,13 +86,25 @@ Route::prefix('v2/refactored/courses')->name('v2.refactored.courses.')->group(fu
     });
 });
 
-// Video Routes (Refactored) - будет создан позже
+// Video Routes (Refactored)
 Route::prefix('v2/refactored/video')->name('v2.refactored.video.')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', [VideoController::class, 'index'])->name('index');
+        Route::get('/popular', [VideoController::class, 'popular'])->name('popular');
+        Route::get('/recent', [VideoController::class, 'recent'])->name('recent');
+        Route::get('/search', [VideoController::class, 'search'])->name('search');
         Route::get('/category/{id}', [VideoController::class, 'showCategory'])->name('category');
         Route::get('/{id}', [VideoController::class, 'showVideo'])->name('show');
-        Route::get('/search', [VideoController::class, 'search'])->name('search');
+        Route::post('/{id}/views', [VideoController::class, 'incrementViews'])->name('increment-views');
+        
+        // Админские маршруты
+        Route::middleware('admin')->group(function () {
+            Route::get('/create', [VideoController::class, 'create'])->name('create');
+            Route::post('/', [VideoController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [VideoController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [VideoController::class, 'update'])->name('update');
+            Route::delete('/{id}', [VideoController::class, 'destroy'])->name('destroy');
+        });
         
         // API маршруты
         Route::prefix('api')->name('api.')->group(function () {
@@ -102,7 +114,7 @@ Route::prefix('v2/refactored/video')->name('v2.refactored.video.')->group(functi
     });
 });
 
-// Auth Routes (Refactored) - будет создан позже
+// Auth Routes (Refactored)
 Route::prefix('v2/refactored/auth')->name('v2.refactored.auth.')->group(function () {
     // Публичные маршруты
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -113,11 +125,20 @@ Route::prefix('v2/refactored/auth')->name('v2.refactored.auth.')->group(function
     Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('password.email');
     Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
     
+    // AJAX проверки доступности
+    Route::post('/check-email', [AuthController::class, 'checkEmailAvailability'])->name('check-email');
+    Route::post('/check-phone', [AuthController::class, 'checkPhoneAvailability'])->name('check-phone');
+    
     // Авторизованные маршруты
     Route::middleware('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::post('/password/change', [AuthController::class, 'changePassword'])->name('password.change');
         Route::post('/phone/verify', [AuthController::class, 'verifyPhone'])->name('phone.verify');
         Route::post('/phone/send-code', [AuthController::class, 'sendVerificationCode'])->name('phone.send-code');
+        
+        // Админские маршруты
+        Route::middleware('admin')->group(function () {
+            Route::get('/stats', [AuthController::class, 'getAuthStats'])->name('stats');
+        });
     });
 });
