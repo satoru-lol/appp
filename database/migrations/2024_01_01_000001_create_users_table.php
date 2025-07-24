@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
@@ -45,6 +46,29 @@ return new class extends Migration
             $table->index(['email', 'phone_verified_at']);
             $table->index(['group', 'created_at']);
         });
+        } else {
+            // Таблица уже существует, добавляем только недостающие поля
+            Schema::table('users', function (Blueprint $table) {
+                if (!Schema::hasColumn('users', 'avatar')) {
+                    $table->string('avatar')->nullable()->after('used_sub');
+                }
+                if (!Schema::hasColumn('users', 'bio')) {
+                    $table->text('bio')->nullable()->after('avatar');
+                }
+                if (!Schema::hasColumn('users', 'quick_access_token')) {
+                    $table->string('quick_access_token')->nullable()->index()->after('bio');
+                }
+                if (!Schema::hasColumn('users', 'last_login_at')) {
+                    $table->timestamp('last_login_at')->nullable()->after('quick_access_token');
+                }
+                if (!Schema::hasColumn('users', 'last_login_ip')) {
+                    $table->string('last_login_ip')->nullable()->after('last_login_at');
+                }
+                if (!Schema::hasColumn('users', 'preferences')) {
+                    $table->json('preferences')->nullable()->after('last_login_ip');
+                }
+            });
+        }
     }
 
     /**
