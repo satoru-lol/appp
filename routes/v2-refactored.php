@@ -6,7 +6,7 @@ use App\Http\Controllers\V2\Refactored\MeetingsController;
 use App\Http\Controllers\V2\Refactored\CoursesController;
 use App\Http\Controllers\V2\Refactored\VideoController;
 use App\Http\Controllers\V2\Refactored\AuthController;
-use App\Http\Controllers\V2\Refactored\HomeController;
+use App\Http\Controllers\V2\Refactored\HomeController as RefactoredHomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +18,10 @@ use App\Http\Controllers\V2\Refactored\HomeController;
 */
 
 // Home Routes (Refactored)
-Route::get('/', [HomeController::class, 'index'])->name('v2.refactored.home.index');
-Route::get('/search', [HomeController::class, 'search'])->name('v2.refactored.home.search');
-Route::get('/about', [HomeController::class, 'about'])->name('v2.refactored.home.about');
-Route::get('/contacts', [HomeController::class, 'contacts'])->name('v2.refactored.home.contacts');
+Route::get('/', [RefactoredHomeController::class, 'index'])->name('v2.refactored.home.index');
+Route::get('/search', [RefactoredHomeController::class, 'search'])->name('v2.refactored.home.search');
+Route::get('/about', [RefactoredHomeController::class, 'about'])->name('v2.refactored.home.about');
+Route::get('/contacts', [RefactoredHomeController::class, 'contacts'])->name('v2.refactored.home.contacts');
 
 // Profile Routes (Refactored)
 Route::middleware('auth')->prefix('v2/refactored/profile')->name('v2.refactored.profile.')->group(function () {

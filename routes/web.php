@@ -38,9 +38,6 @@ require __DIR__.'/v2.php';
 // Подключаем маршруты для курсов v2
 require __DIR__.'/web-courses-v2.php';
 
-// Подключаем рефакторенные V2 маршруты
-require __DIR__.'/v2-refactored.php';
-
 Route::get('/clear-cache', function() {
     Artisan::call('optimize:clear');
     return "Cache is cleared";
@@ -53,7 +50,7 @@ Route::get('/test-mail', function () {
 });
 
 Route::get('/getDataBitrix',[BonusController::class,'getData']);
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Route::get('/', [HomeController::class, 'index'])->name('home'); // Заменен на рефакторенную версию
 Route::get('/test', [HomeController::class, 'test'])->name('test');
 Route::post('/addcomment', [BlogController::class, 'addcomment'])->name('addcomment');
 Route::get('/addlike/{id}', [BlogController::class, 'addlike'])->name('addlike');
@@ -422,3 +419,9 @@ Route::get('/pay/{service_id}',[PaymentController::class,'create'])->name('pay')
 
 // V2 Home Route
 Route::get('/v2/home', [HomeController::class, 'indexV2'])->name('v2.home');
+
+// Подключаем тестовые маршруты для отладки
+require __DIR__.'/test-routes.php';
+
+// Подключаем рефакторенные V2 маршруты в конце для приоритета
+require __DIR__.'/v2-refactored.php';

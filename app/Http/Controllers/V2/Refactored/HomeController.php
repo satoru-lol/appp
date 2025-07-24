@@ -9,7 +9,7 @@ use App\Models\Specialist;
 use App\Models\User;
 use App\Models\ViewParts;
 use App\Models\Category;
-use App\Models\Video;
+use App\Models\Videos as Video;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
@@ -30,17 +30,15 @@ class HomeController extends Controller
                 ->with('error', 'Ваш аккаунт заблокирован');
         }
 
-        // Кэшируем данные на 10 минут для оптимизации
-        $data = Cache::remember('home_page_data', 600, function () {
-            return [
-                'specialists' => $this->getTopSpecialists(),
-                'courses' => $this->getPopularCourses(),
-                'blogs' => $this->getLatestBlogs(),
-                'videos' => $this->getPopularVideos(),
-                'stats' => $this->getStats(),
-                'viewParts' => ViewParts::all()
-            ];
-        });
+        // Простые данные без кэширования для отладки
+        $data = [
+            'specialists' => $this->getTopSpecialists(),
+            'courses' => $this->getPopularCourses(),
+            'blogs' => $this->getLatestBlogs(),
+            'videos' => $this->getPopularVideos(),
+            'stats' => $this->getStats(),
+            'viewParts' => collect([]) // Упрощаем для отладки
+        ];
 
         // SEO данные
         $seoData = [
@@ -59,11 +57,15 @@ class HomeController extends Controller
      */
     private function getTopSpecialists()
     {
-        return Specialist::with(['user', 'category'])
-            ->active()
-            ->topRated()
-            ->limit(8)
-            ->get();
+        try {
+            return Specialist::with(['user', 'category'])
+                ->where('status', true)
+                ->orderBy('rating', 'desc')
+                ->limit(8)
+                ->get();
+        } catch (\Exception $e) {
+            return collect([]);
+        }
     }
 
     /**
@@ -71,11 +73,15 @@ class HomeController extends Controller
      */
     private function getPopularCourses()
     {
-        return Course::with(['category', 'user'])
-            ->where('status', 1)
-            ->orderBy('views', 'desc')
-            ->limit(6)
-            ->get();
+        try {
+            return Course::with(['category', 'user'])
+                ->where('status', 1)
+                ->orderBy('views', 'desc')
+                ->limit(6)
+                ->get();
+        } catch (\Exception $e) {
+            return collect([]);
+        }
     }
 
     /**
@@ -83,11 +89,15 @@ class HomeController extends Controller
      */
     private function getLatestBlogs()
     {
-        return Blog::with(['category', 'user'])
-            ->where('status', 1)
-            ->latest()
-            ->limit(4)
-            ->get();
+        try {
+            return Blog::with(['category', 'user'])
+                ->where('status', 1)
+                ->latest()
+                ->limit(4)
+                ->get();
+        } catch (\Exception $e) {
+            return collect([]);
+        }
     }
 
     /**
@@ -95,11 +105,14 @@ class HomeController extends Controller
      */
     private function getPopularVideos()
     {
-        return Video::with(['category'])
-            ->where('status', 1)
-            ->orderBy('views', 'desc')
-            ->limit(4)
-            ->get();
+        try {
+            return Video::where('status', 1)
+                ->orderBy('views', 'desc')
+                ->limit(4)
+                ->get();
+        } catch (\Exception $e) {
+            return collect([]);
+        }
     }
 
     /**
@@ -107,15 +120,23 @@ class HomeController extends Controller
      */
     private function getStats()
     {
-        return Cache::remember('platform_stats', 3600, function () {
+        try {
             return [
                 'users_count' => User::count(),
-                'specialists_count' => Specialist::active()->count(),
+                'specialists_count' => Specialist::where('status', true)->count(),
                 'courses_count' => Course::where('status', 1)->count(),
                 'videos_count' => Video::where('status', 1)->count(),
                 'blogs_count' => Blog::where('status', 1)->count()
             ];
-        });
+        } catch (\Exception $e) {
+            return [
+                'users_count' => 0,
+                'specialists_count' => 0,
+                'courses_count' => 0,
+                'videos_count' => 0,
+                'blogs_count' => 0
+            ];
+        }
     }
 
     /**
@@ -132,50 +153,53 @@ class HomeController extends Controller
 
         $results = [];
         
-        if ($type === 'all' || $type === 'courses') {
-            $results['courses'] = Course::where('status', 1)
-                ->where(function($q) use ($query) {
-                    $q->where('title', 'LIKE', "%{$query}%")
-                      ->orWhere('description', 'LIKE', "%{$query}%");
-                })
-                ->with(['category', 'user'])
-                ->limit(10)
-                ->get();
-        }
+        try {
+            if ($type === 'all' || $type === 'courses') {
+                $results['courses'] = Course::where('status', 1)
+                    ->where(function($q) use ($query) {
+                        $q->where('title', 'LIKE', "%{$query}%")
+                          ->orWhere('description', 'LIKE', "%{$query}%");
+                    })
+                    ->with(['category', 'user'])
+                    ->limit(10)
+                    ->get();
+            }
 
-        if ($type === 'all' || $type === 'specialists') {
-            $results['specialists'] = Specialist::active()
-                ->whereHas('user', function($q) use ($query) {
-                    $q->where('firstname', 'LIKE', "%{$query}%")
-                      ->orWhere('lastname', 'LIKE', "%{$query}%");
-                })
-                ->orWhere('about', 'LIKE', "%{$query}%")
-                ->orWhere('degree', 'LIKE', "%{$query}%")
-                ->with(['user', 'category'])
-                ->limit(10)
-                ->get();
-        }
+            if ($type === 'all' || $type === 'specialists') {
+                $results['specialists'] = Specialist::where('status', true)
+                    ->whereHas('user', function($q) use ($query) {
+                        $q->where('firstname', 'LIKE', "%{$query}%")
+                          ->orWhere('lastname', 'LIKE', "%{$query}%");
+                    })
+                    ->orWhere('about', 'LIKE', "%{$query}%")
+                    ->orWhere('degree', 'LIKE', "%{$query}%")
+                    ->with(['user', 'category'])
+                    ->limit(10)
+                    ->get();
+            }
 
-        if ($type === 'all' || $type === 'blogs') {
-            $results['blogs'] = Blog::where('status', 1)
-                ->where(function($q) use ($query) {
-                    $q->where('title', 'LIKE', "%{$query}%")
-                      ->orWhere('description', 'LIKE', "%{$query}%");
-                })
-                ->with(['category', 'user'])
-                ->limit(10)
-                ->get();
-        }
+            if ($type === 'all' || $type === 'blogs') {
+                $results['blogs'] = Blog::where('status', 1)
+                    ->where(function($q) use ($query) {
+                        $q->where('title', 'LIKE', "%{$query}%")
+                          ->orWhere('description', 'LIKE', "%{$query}%");
+                    })
+                    ->with(['category', 'user'])
+                    ->limit(10)
+                    ->get();
+            }
 
-        if ($type === 'all' || $type === 'videos') {
-            $results['videos'] = Video::where('status', 1)
-                ->where(function($q) use ($query) {
-                    $q->where('title', 'LIKE', "%{$query}%")
-                      ->orWhere('description', 'LIKE', "%{$query}%");
-                })
-                ->with(['category'])
-                ->limit(10)
-                ->get();
+            if ($type === 'all' || $type === 'videos') {
+                $results['videos'] = Video::where('status', 1)
+                    ->where(function($q) use ($query) {
+                        $q->where('title', 'LIKE', "%{$query}%")
+                          ->orWhere('description', 'LIKE', "%{$query}%");
+                    })
+                    ->limit(10)
+                    ->get();
+            }
+        } catch (\Exception $e) {
+            $results = [];
         }
 
         return view('refactored.home.search', [
