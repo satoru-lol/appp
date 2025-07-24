@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductPermission;
 use App\Repositories\V2\UserRepository;
 use App\Services\SubscriptionService;
+use App\Services\V2\ClubService;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -15,7 +16,8 @@ class ProfileService
 {
     public function __construct(
         private UserRepository $userRepository,
-        private SubscriptionService $subscriptionService
+        private SubscriptionService $subscriptionService,
+        private ClubService $clubService
     ) {}
 
     public function getUserDashboardData(int $userId, string $activeTab = 'profile'): array
@@ -56,7 +58,7 @@ class ProfileService
         // Получаем клубы если есть доступ
         $clubs = collect();
         if ($subscriptionStatus->isActive && $subscriptionStatus->hasClubAccess) {
-            $clubs = \App\Models\Club::with('clubDates')->get();
+            $clubs = $this->clubService->getClubsByUserLevel($subscription->level);
         }
 
         // Получаем транзакции и платежи
