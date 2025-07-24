@@ -152,4 +152,61 @@ class ProfileController extends Controller
                 ->with('pay_error', 'Произошла ошибка во время оплаты. Пожалуйста, попробуйте снова или обратитесь в поддержку.');
         }
     }
+
+    /**
+     * Обработка успешной оплаты
+     */
+    public function paymentSuccess(Request $request): RedirectResponse
+    {
+        return redirect()->route('v2.refactored.profile.index', ['tab' => 'balance'])
+            ->with('pay_success', 'Ваш платеж обрабатывается. Баланс будет пополнен в течение нескольких минут.');
+    }
+
+    /**
+     * Обработка неуспешной оплаты
+     */
+    public function paymentFail(Request $request): RedirectResponse
+    {
+        return redirect()->route('v2.refactored.profile.index', ['tab' => 'balance'])
+            ->with('pay_error', 'Произошла ошибка во время оплаты. Пожалуйста, попробуйте снова или обратитесь в поддержку.');
+    }
+
+    /**
+     * Отмена ежемесячной оплаты подписки
+     */
+    public function cancelMonthPay(Request $request): RedirectResponse
+    {
+        try {
+            $result = $this->profileService->cancelMonthlySubscription(auth()->id());
+            
+            return redirect()->route('v2.refactored.profile.index', ['tab' => 'subscription'])
+                ->with('success', $result['message']);
+                
+        } catch (\Exception $e) {
+            return redirect()->route('v2.refactored.profile.index', ['tab' => 'subscription'])
+                ->with('error', 'Ошибка при отмене подписки: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Создание QR ссылки для быстрого доступа
+     */
+    public function createQrLink(Request $request): JsonResponse
+    {
+        try {
+            $qrData = $this->profileService->generateQrLink(auth()->id());
+            
+            return response()->json([
+                'success' => true,
+                'qr_url' => $qrData['url'],
+                'qr_code' => $qrData['qr_code']
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ошибка при создании QR кода'
+            ], 500);
+        }
+    }
 }

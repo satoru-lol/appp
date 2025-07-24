@@ -1,5 +1,24 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Используйте App\Http\Controllers\V2\Refactored\MeetingsController
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Новая архитектура встреч находится в app/Http/Controllers/V2/Refactored/MeetingsController.php
+ * 
+ * Миграция:
+ * - Старые маршруты: /our-meetings/*
+ * - Новые маршруты: /v2/refactored/meetings/*
+ * 
+ * Новая архитектура включает:
+ * - MeetingService для бизнес-логики
+ * - MeetingRepository для работы с данными
+ * - Оптимизированные запросы к БД
+ * - API поддержку
+ * 
+ * @see App\Http\Controllers\V2\Refactored\MeetingsController
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Blog;

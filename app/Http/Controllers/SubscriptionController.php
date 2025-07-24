@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Функционал подписок перенесен в рефакторенную архитектуру
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Функционал подписок теперь находится в:
+ * - app/Services/V2/ProfileService.php (управление подписками)
+ * - app/Services/SubscriptionService.php (логика подписок)
+ * - app/Repositories/V2/UserRepository.php (данные подписок)
+ * 
+ * Миграция:
+ * - Старые маршруты: /subscription/*
+ * - Новые маршруты: /v2/refactored/profile/* (управление подписками)
+ * 
+ * @see App\Http\Controllers\V2\Refactored\ProfileController для управления подписками
+ * @see App\Services\V2\ProfileService для логики подписок
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Subscription;

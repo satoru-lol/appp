@@ -1,4 +1,24 @@
 <?php
+
+/**
+ * @deprecated Этот контроллер устарел. Используйте App\Http\Controllers\V2\Refactored\VideoController
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Новая архитектура видеотеки находится в app/Http/Controllers/V2/Refactored/VideoController.php
+ * 
+ * Миграция:
+ * - Старые маршруты: /video-library/*
+ * - Новые маршруты: /v2/refactored/video/*
+ * 
+ * Новая архитектура включает:
+ * - VideoService для бизнес-логики с проверкой подписки
+ * - VideoRepository для работы с данными
+ * - Оптимизированные запросы к БД
+ * - API поддержку
+ * 
+ * @see App\Http\Controllers\V2\Refactored\VideoController
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Club;

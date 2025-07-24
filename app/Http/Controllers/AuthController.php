@@ -1,5 +1,24 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Используйте App\Http\Controllers\V2\Refactored\AuthController
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Новая архитектура авторизации находится в app/Http/Controllers/V2/Refactored/AuthController.php
+ * 
+ * Миграция:
+ * - Старые маршруты: /login, /register, /logout (основные)
+ * - Новые маршруты: /v2/refactored/auth/* (полная система авторизации)
+ * 
+ * Новая архитектура включает:
+ * - Form Requests для валидации
+ * - AuthService для бизнес-логики
+ * - AuthRepository для работы с данными
+ * - Поддержка AJAX и API
+ * 
+ * @see App\Http\Controllers\V2\Refactored\AuthController
+ */
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;

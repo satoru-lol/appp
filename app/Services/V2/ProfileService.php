@@ -213,4 +213,72 @@ class ProfileService
             'Cache-Control' => 'public, max-age=3600'
         ]);
     }
+
+    /**
+     * Отмена ежемесячной подписки
+     */
+    public function cancelMonthlySubscription(int $userId): array
+    {
+        $user = $this->userRepository->findById($userId);
+        
+        if (!$user) {
+            throw new \Exception('Пользователь не найден');
+        }
+
+        $subscription = $user->subscription;
+        if (!$subscription || !$subscription->is_active) {
+            throw new \Exception('У вас нет активной подписки');
+        }
+
+        // Логика отмены подписки
+        $subscription->update([
+            'is_active' => false,
+            'cancelled_at' => now(),
+            'cancel_reason' => 'Отменено пользователем'
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Подписка успешно отменена'
+        ];
+    }
+
+    /**
+     * Генерация QR ссылки для быстрого доступа
+     */
+    public function generateQrLink(int $userId): array
+    {
+        $user = $this->userRepository->findById($userId);
+        
+        if (!$user) {
+            throw new \Exception('Пользователь не найден');
+        }
+
+        // Создаем уникальную ссылку для пользователя
+        $token = hash('sha256', $user->id . $user->email . time());
+        $url = url("/quick-access/{$token}");
+
+        // Сохраняем токен в базе данных (если нужно)
+        // $user->update(['quick_access_token' => $token]);
+
+        return [
+            'url' => $url,
+            'qr_code' => "data:image/svg+xml;base64," . base64_encode($this->generateQrCodeSvg($url)),
+            'token' => $token
+        ];
+    }
+
+    /**
+     * Генерация простого QR кода в SVG формате
+     */
+    private function generateQrCodeSvg(string $data): string
+    {
+        // Простая заглушка для QR кода
+        // В реальном проекте используйте библиотеку типа endroid/qr-code
+        return '<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="white"/>
+            <text x="100" y="100" text-anchor="middle" fill="black">QR Code</text>
+            <text x="100" y="120" text-anchor="middle" fill="gray" font-size="10">Use QR library</text>
+        </svg>';
+    }
 }

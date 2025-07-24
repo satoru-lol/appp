@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Функционал клубов интегрирован в рефакторенную архитектуру
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Функционал клубов теперь находится в:
+ * - app/Services/V2/ClubService.php (бизнес-логика клубов)
+ * - app/Repositories/V2/ClubRepository.php (работа с данными)
+ * - app/Services/V2/ProfileService.php (клубы в профиле пользователя)
+ * 
+ * Миграция:
+ * - Старые маршруты: /clubs/*
+ * - Новые маршруты: интегрированы в /v2/refactored/profile/* (для пользователей)
+ * 
+ * @see App\Services\V2\ClubService
+ * @see App\Http\Controllers\V2\Refactored\ProfileController
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Club;

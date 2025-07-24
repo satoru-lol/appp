@@ -1,5 +1,24 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Используйте App\Http\Controllers\V2\Refactored\ProfileController
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Новая архитектура профиля находится в app/Http/Controllers/V2/Refactored/ProfileController.php
+ * 
+ * Миграция:
+ * - Старые маршруты: /profile/*
+ * - Новые маршруты: /v2/refactored/profile/*
+ * 
+ * Новая архитектура включает:
+ * - ProfileService для бизнес-логики
+ * - UserRepository для работы с данными
+ * - Form Requests для валидации
+ * - Оптимизированные запросы к БД
+ * 
+ * @see App\Http\Controllers\V2\Refactored\ProfileController
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Club;

@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * @deprecated Этот контроллер устарел. Функционал оплаты интегрирован в рефакторенную архитектуру
+ * 
+ * ВНИМАНИЕ: Данный файл будет удален в будущих версиях.
+ * Функционал оплаты теперь находится в:
+ * - app/Services/V2/AuthService.php (для авторизованных платежей)
+ * - app/Services/PaymentService.php (основной сервис оплаты)
+ * - app/Services/Payments/RobokassaGateway.php (шлюз оплаты)
+ * 
+ * Миграция:
+ * - Старые маршруты: /pay/*
+ * - Новые маршруты: интегрированы в /v2/refactored/profile/* и /v2/refactored/auth/*
+ * 
+ * @see App\Http\Controllers\V2\Refactored\ProfileController для оплаты подписок
+ * @see App\Services\PaymentService для логики оплаты
+ */
+
 namespace App\Http\Controllers;
 use App\Http\Service\YookassaService;
 use Illuminate\Http\Request;

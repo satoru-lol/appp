@@ -26,6 +26,12 @@ Route::middleware('auth')->prefix('v2/refactored/profile')->name('v2.refactored.
     Route::post('/generate-qr-link', [ProfileController::class, 'generateQrLink'])->name('generate-qr-link');
     Route::post('/subscription', [ProfileController::class, 'handleSubscription'])->name('subscription.handle');
     Route::post('/balance/add', [ProfileController::class, 'addBalance'])->name('balance.add');
+    Route::post('/subscription/cancel', [ProfileController::class, 'cancelMonthPay'])->name('subscription.cancel');
+    Route::post('/qr-link', [ProfileController::class, 'createQrLink'])->name('qr-link.create');
+    
+    // Payment callback routes
+    Route::get('/payment/success', [ProfileController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('/payment/fail', [ProfileController::class, 'paymentFail'])->name('payment.fail');
 });
 
 // Avatar Route (Refactored)
