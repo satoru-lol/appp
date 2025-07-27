@@ -1,0 +1,257 @@
+/* =================================================================
+   СТИЛИ ДЛЯ ВИДЕОТЕКИ V2 (ФИОЛЕТОВАЯ ТЕМА)
+   ================================================================= */
+
+/* Общие стили */
+.videolibrary.v2 {
+    margin-bottom: 2rem;
+}
+
+.videolibrary.v2 h1, .videolibrary.v2 h5 {
+    font-weight: 600;
+}
+
+.videolibrary.v2 .btn-primary {
+    background-color: #562E74;
+    border-color: #562E74;
+    transition: all 0.3s ease;
+}
+
+.videolibrary.v2 .btn-primary:hover {
+    background-color: #4a266a;
+    border-color: #4a266a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.videolibrary.v2 .btn-outline-primary {
+    border-color: #562E74;
+    color: #562E74;
+    transition: all 0.3s ease;
+}
+
+.videolibrary.v2 .btn-outline-primary:hover {
+    background-color: #562E74;
+    color: #fff;
+}
+
+.videolibrary.v2 .badge.bg-primary {
+    background-color: #562E74 !important;
+}
+
+/* Стили для карточек категорий */
+.videolibrary.v2 .category-card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.videolibrary.v2 .category-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.videolibrary.v2 .category-header {
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 1rem 1.25rem;
+}
+
+.videolibrary.v2 .toggle-category {
+    color: #562E74;
+}
+
+/* Стили для подкатегорий */
+.videolibrary.v2 .subcategories .list-group-item {
+    border-color: #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.videolibrary.v2 .subcategories .list-group-item a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.videolibrary.v2 .subcategories .list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+/* Стили для карточек видео */
+.videolibrary.v2 .video-item .card {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+.videolibrary.v2 .video-item .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.videolibrary.v2 .video-thumbnail {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #562E74;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.videolibrary.v2 .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Стили для страницы просмотра видео */
+.videolibrary.v2.video-page .video-player-container {
+    /* background-color: #000; */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.videolibrary.v2.video-page .video-title {
+    font-weight: 700;
+}
+
+.videolibrary.v2.video-page .related-videos .list-group-item.active {
+    background-color: #562E74;
+    border-color: #562E74;
+}
+
+.videolibrary.v2.video-page .related-videos .list-group-item.active a {
+    color: #fff;
+}
+
+/* Стили для результатов поиска */
+.search-results {
+    margin-bottom: 2rem;
+}
+
+.search-results .badge {
+    font-size: 0.8rem;
+}
+
+.search-results h3 .text-primary {
+    color: #562E74 !important;
+}
+
+.search-results .btn-outline-secondary {
+    border-color: #ced4da;
+    color: #6c757d;
+}
+
+.search-results .btn-outline-secondary:hover {
+    background-color: #e9ecef;
+}
+
+/* =================================================================
+   СТИЛИ ДЛЯ СТРАНИЦЫ КАТЕГОРИИ (ДИЗАЙН 2.0)
+   ================================================================= */
+
+.videolibrary.v2.category-page {
+    font-family: 'Inter', sans-serif;
+}
+
+.videolibrary.v2.category-page h1 {
+    font-weight: 700;
+}
+
+/* Карточка "Подкатегории" */
+.videolibrary.v2.category-page .card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.07);
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.videolibrary.v2.category-page .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 1.25rem 1.5rem;
+}
+
+.videolibrary.v2.category-page .card-header h5 {
+    font-weight: 600;
+}
+
+/* Кнопки подкатегорий */
+.videolibrary.v2.category-page .btn-outline-primary {
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.videolibrary.v2.category-page .btn-outline-primary:hover {
+    background-color: #8a41c5;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(138, 65, 197, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Карточки видео на странице категории */
+.videolibrary.v2.category-page .video-item .card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.videolibrary.v2.category-page .video-item .card:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08), 0 5px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.videolibrary.v2.category-page .video-thumbnail {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    height: 190px;
+}
+
+.videolibrary.v2.category-page .video-thumbnail img {
+    transition: transform 0.3s ease;
+}
+
+.videolibrary.v2.category-page .video-item .card:hover .video-thumbnail img {
+    transform: scale(1.05);
+}
+
+.videolibrary.v2.category-page .video-item .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.videolibrary.v2.category-page .video-item .card-body {
+    padding: 1.5rem;
+}
+
+.videolibrary.v2.category-page .video-item .card-footer {
+    background: transparent;
+    border-top: 1px solid #f1f1f1;
+}
+
+/* Основная кнопка "Найти" и "Смотреть" */
+.videolibrary.v2.category-page .btn-primary {
+    background-image: linear-gradient(to right, #6a3093 0%, #a044ff 51%, #6a3093 100%);
+    background-size: 200% auto;
+    border: none;
+    color: white;
+    padding: .375rem 20px;
+    text-align: center;
+    transition: 0.5s;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.55);
+}
+
+.videolibrary.v2.category-page .btn-primary:hover {
+    background-position: right center;
+    box-shadow: 0 8px 25px 0 rgba(116, 79, 168, 0.4);
+    transform: translateY(-1px);
+} 
